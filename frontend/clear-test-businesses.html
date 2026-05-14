@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Test Businesses</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        button { padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #c82333; }
+        .success { color: green; }
+        .warning { color: orange; }
+    </style>
+</head>
+<body>
+    <h1>Clear Test Businesses</h1>
+    <p>Use this to remove the test businesses I added.</p>
+
+    <button onclick="clearTestBusinesses()">Clear Test Businesses Only</button>
+    <button onclick="clearAllBusinesses()">Clear ALL Businesses</button>
+    <button onclick="showCurrentBusinesses()">Show Current Businesses</button>
+
+    <div id="result"></div>
+
+    <script>
+        function clearTestBusinesses() {
+            const approvedBusinesses = JSON.parse(localStorage.getItem("approvedBusinesses") || "[]");
+            const pendingBusinesses = JSON.parse(localStorage.getItem("pendingBusinesses") || "[]");
+
+            // Remove only test businesses (those with ids starting with "test-")
+            const filteredApproved = approvedBusinesses.filter(biz => !biz.id.startsWith("test-"));
+            const filteredPending = pendingBusinesses.filter(biz => !biz.id.startsWith("test-"));
+
+            localStorage.setItem("approvedBusinesses", JSON.stringify(filteredApproved));
+            localStorage.setItem("pendingBusinesses", JSON.stringify(filteredPending));
+
+            document.getElementById('result').innerHTML = `
+                <p class="success">✅ Test businesses cleared!</p>
+                <p>Remaining approved businesses: ${filteredApproved.length}</p>
+                <p>Remaining pending businesses: ${filteredPending.length}</p>
+            `;
+        }
+
+        function clearAllBusinesses() {
+            localStorage.setItem("approvedBusinesses", "[]");
+            localStorage.setItem("pendingBusinesses", "[]");
+
+            document.getElementById('result').innerHTML = `
+                <p class="warning">⚠️ ALL businesses cleared!</p>
+                <p>Approved businesses: 0</p>
+                <p>Pending businesses: 0</p>
+            `;
+        }
+
+        function showCurrentBusinesses() {
+            const approvedBusinesses = JSON.parse(localStorage.getItem("approvedBusinesses") || "[]");
+            const pendingBusinesses = JSON.parse(localStorage.getItem("pendingBusinesses") || "[]");
+
+            let html = `<h3>Current Businesses:</h3>`;
+            html += `<p><strong>Approved (${approvedBusinesses.length}):</strong></p>`;
+            if (approvedBusinesses.length > 0) {
+                html += `<ul>`;
+                approvedBusinesses.forEach(biz => {
+                    html += `<li>${biz.businessName} - ${biz.industry} (${biz.id})</li>`;
+                });
+                html += `</ul>`;
+            } else {
+                html += `<p>No approved businesses</p>`;
+            }
+
+            html += `<p><strong>Pending (${pendingBusinesses.length}):</strong></p>`;
+            if (pendingBusinesses.length > 0) {
+                html += `<ul>`;
+                pendingBusinesses.forEach(biz => {
+                    html += `<li>${biz.businessName} - ${biz.industry} (${biz.id})</li>`;
+                });
+                html += `</ul>`;
+            } else {
+                html += `<p>No pending businesses</p>`;
+            }
+
+            document.getElementById('result').innerHTML = html;
+        }
+    </script>
+</body>
+</html>

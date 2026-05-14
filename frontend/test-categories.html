@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Test Businesses for Categories</title>
+</head>
+<body>
+    <h1>Add Test Businesses for Category Testing</h1>
+    <button onclick="addTestBusinesses()">Add Sample Businesses</button>
+    <div id="result"></div>
+
+    <script>
+        function addTestBusinesses() {
+            const sampleBusinesses = [
+                {
+                    id: "test-restaurant-1",
+                    businessName: "Mario's Italian Kitchen",
+                    industry: "Restaurants",
+                    businessType: "Restaurant",
+                    city: "New York",
+                    state: "NY",
+                    address: "123 Main St",
+                    phone: "(555) 123-4567",
+                    description: "Authentic Italian cuisine",
+                    selectedPackage: "Premium",
+                    addedBy: "test@example.com",
+                    status: "approved",
+                    approvedAt: new Date().toISOString()
+                },
+                {
+                    id: "test-tech-1",
+                    businessName: "Tech Solutions Inc",
+                    industry: "Technology",
+                    businessType: "Software Company",
+                    city: "San Francisco",
+                    state: "CA",
+                    address: "456 Tech Blvd",
+                    phone: "(555) 987-6543",
+                    description: "Custom software development",
+                    selectedPackage: "Basic",
+                    addedBy: "test@example.com",
+                    status: "approved",
+                    approvedAt: new Date().toISOString()
+                },
+                {
+                    id: "test-restaurant-2",
+                    businessName: "Golden Dragon Chinese",
+                    industry: "Restaurants",
+                    businessType: "Restaurant",
+                    city: "Los Angeles",
+                    state: "CA",
+                    address: "789 Chinatown Ave",
+                    phone: "(555) 456-7890",
+                    description: "Traditional Chinese cuisine",
+                    selectedPackage: "Standard",
+                    addedBy: "test@example.com",
+                    status: "approved",
+                    approvedAt: new Date().toISOString()
+                }
+            ];
+
+            // Add to approved businesses
+            const existingApproved = JSON.parse(localStorage.getItem("approvedBusinesses") || "[]");
+            const updatedApproved = [...existingApproved, ...sampleBusinesses];
+            localStorage.setItem("approvedBusinesses", JSON.stringify(updatedApproved));
+
+            document.getElementById('result').innerHTML = `
+                <h2>✅ Sample businesses added successfully!</h2>
+                <p>Added businesses:</p>
+                <ul>
+                    <li><strong>Mario's Italian Kitchen</strong> - Category: Restaurants</li>
+                    <li><strong>Tech Solutions Inc</strong> - Category: Technology</li>
+                    <li><strong>Golden Dragon Chinese</strong> - Category: Restaurants</li>
+                </ul>
+                <p>Now you can test the categories:</p>
+                <ol>
+                    <li>Go to your app at http://localhost:8083</li>
+                    <li>Click "Categories" in the navbar</li>
+                    <li>Click "Restaurants" - you should see 2 restaurants</li>
+                    <li>Click "Technology" - you should see 1 tech company</li>
+                </ol>
+            `;
+        }
+    </script>
+</body>
+</html>

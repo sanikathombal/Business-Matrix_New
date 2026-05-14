@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add 3 Test Businesses</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .business { margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Add 3 Test Businesses to Different Categories</h1>
+    <p>This will add 3 sample businesses to test the category filtering:</p>
+
+    <div class="business">
+        <strong>1. Mario's Italian Kitchen</strong><br>
+        Category: Restaurants<br>
+        Location: New York, NY
+    </div>
+
+    <div class="business">
+        <strong>2. Tech Solutions Inc</strong><br>
+        Category: Technology<br>
+        Location: San Francisco, CA
+    </div>
+
+    <div class="business">
+        <strong>3. Golden Dragon Chinese Restaurant</strong><br>
+        Category: Restaurants<br>
+        Location: Los Angeles, CA
+    </div>
+
+    <button onclick="addTestBusinesses()">Add These 3 Businesses</button>
+    <div id="result"></div>
+
+    <script>
+        function addTestBusinesses() {
+            const sampleBusinesses = [
+                {
+                    id: "test-restaurant-1",
+                    businessName: "Mario's Italian Kitchen",
+                    industry: "Restaurants",
+                    businessType: "Restaurant",
+                    city: "New York",
+                    state: "NY",
+                    address: "123 Main St",
+                    phone: "(555) 123-4567",
+                    description: "Authentic Italian cuisine with traditional recipes passed down through generations. Fresh ingredients, homemade pasta, and warm hospitality.",
+                    selectedPackage: "Premium",
+                    addedBy: "test@example.com",
+                    status: "approved",
+                    approvedAt: new Date().toISOString(),
+                    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=250&fit=crop",
+                    website: "https://mariositalian.com",
+                    zipCode: "10001"
+                },
+                {
+                    id: "test-tech-1",
+                    businessName: "Tech Solutions Inc",
+                    industry: "Technology",
+                    businessType: "Software Company",
+                    city: "San Francisco",
+                    state: "CA",
+                    address: "456 Tech Blvd",
+                    phone: "(555) 987-6543",
+                    description: "Leading software development company specializing in custom solutions, web applications, and digital transformation for businesses.",
+                    selectedPackage: "Basic",
+                    addedBy: "test@example.com",
+                    status: "approved",
+                    approvedAt: new Date().toISOString(),
+                    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=250&fit=crop",
+                    website: "https://techsolutions.com",
+                    zipCode: "94105"
+                },
+                {
+                    id: "test-restaurant-2",
+                    businessName: "Golden Dragon Chinese Restaurant",
+                    industry: "Restaurants",
+                    businessType: "Restaurant",
+                    city: "Los Angeles",
+                    state: "CA",
+                    address: "789 Chinatown Ave",
+                    phone: "(555) 456-7890",
+                    description: "Traditional Chinese cuisine with authentic flavors from Canton. Dim sum, Peking duck, and family recipes from China.",
+                    selectedPackage: "Standard",
+                    addedBy: "test@example.com",
+                    status: "approved",
+                    approvedAt: new Date().toISOString(),
+                    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&h=250&fit=crop",
+                    website: "https://goldendragon.com",
+                    zipCode: "90012"
+                }
+            ];
+
+            // Add to approved businesses
+            const existingApproved = JSON.parse(localStorage.getItem("approvedBusinesses") || "[]");
+            const updatedApproved = [...existingApproved, ...sampleBusinesses];
+            localStorage.setItem("approvedBusinesses", JSON.stringify(updatedApproved));
+
+            document.getElementById('result').innerHTML = `
+                <h2 style="color: green;">✅ 3 Test businesses added successfully!</h2>
+                <p><strong>What to test now:</strong></p>
+                <ol>
+                    <li>Open your BusinessMatrix app</li>
+                    <li>Click "Categories" in the navbar</li>
+                    <li>Click "Restaurants" - you should see 2 restaurants (Mario's Italian Kitchen & Golden Dragon Chinese)</li>
+                    <li>Click "Technology" - you should see 1 tech company (Tech Solutions Inc)</li>
+                    <li>Try other categories - they should be empty (no businesses in those categories yet)</li>
+                </ol>
+                <p><strong>Note:</strong> These businesses are already approved, so they appear directly in the category pages without needing admin approval.</p>
+            `;
+        }
+    </script>
+</body>
+</html>
